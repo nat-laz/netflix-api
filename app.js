@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import authRouter from "./routes/authRouter.js"
-// import userRouter from "./routes/userRouter.js"
+import userRouter from "./routes/userRouter.js"
 // import movieRouter from "./routes/movieRouter.js"
 // import listRouter from "./routes/listRouter.js"
 
@@ -24,7 +24,7 @@ mongoose
 app.use(express.json());
 
 app.use("/api/auth", authRouter);
-// app.use("/api/users", userRouter);
+app.use("/api/users", userRouter);
 // app.use("/api/movies", movieRouter);
 // app.use("/api/lists", listRouter);
 

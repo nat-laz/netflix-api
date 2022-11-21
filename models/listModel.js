@@ -12,4 +12,4 @@ const listSchema = Schema(
 
 const List = model("List", listSchema)
 
-export default User;
+export default List;

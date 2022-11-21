@@ -12,7 +12,7 @@ export const signupController = async (req, res) => {
     // Encrypt
     password: CryptoJS.AES.encrypt(
       password,
-      process.env.SECERET_KEY
+      process.env.SECRET_KEY
     ).toString(),
   });
   try {
@@ -32,7 +32,7 @@ export const signinController = async (req, res) => {
     !user && res.status(401).json({ error: "Wrong password or username!" });
 
     // Decrypt
-    const bytes = CryptoJS.AES.decrypt(user.password, process.env.SECERET_KEY);
+    const bytes = CryptoJS.AES.decrypt(user.password, process.env.SECRET_KEY);
     const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
 
     originalPassword !== req.body.password &&
@@ -40,7 +40,7 @@ export const signinController = async (req, res) => {
 
     const accessToken = jwt.sign(
       { id: user._id, isAdmin: user.isAdmin },
-      process.env.JWT_SECRET,
+      process.env.SECRET_KEY,
       { expiresIn: "5d" }
     );
 
