@@ -39,21 +39,6 @@ export const deleteUser = async (req, res) => {
   }
 };
 
-//GET ALL
-export const getAllUser = async (req, res) => {
-    const query = req.query.new
-    if (req.user.isAdmin) {
-        try {
-          const users = query ? await User.find().limit(2) : await User.find()
-          res.status(200).json(users);
-        } catch (error) {
-          res.status(500).json({ error: error.message });
-        }
-      } else {
-        res.status(403).json({ error: "You are not allowed to see all users" });
-      }
-};
-
 // GET
 export const getUser = async (req, res) => {
   try {
@@ -65,4 +50,41 @@ export const getUser = async (req, res) => {
   }
 };
 
-export const getUserStats = async (req, res) => {};
+//GET ALL
+export const getAllUser = async (req, res) => {
+  const query = req.query.new;
+  if (req.user.isAdmin) {
+    try {
+      const users = query
+        ? await User.find().sort({ _id: -1 }).limit(2)
+        : await User.find();
+      res.status(200).json(users);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  } else {
+    res.status(403).json({ error: "You are not allowed to see all users" });
+  }
+};
+
+//GET USER STATISTIC IN LAST YEAR
+export const getUserStats = async (req, res) => {
+  try {
+    const data = await User.aggregate([
+      {
+        $project: {
+          month: { $month: "$createdAt" },
+        },
+      },
+      {
+        $group: {
+          _id: "$month",
+          total: { $sum: 1 },
+        },
+      },
+    ]);
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};

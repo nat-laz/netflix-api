@@ -19,4 +19,4 @@ const movieSchema = Schema(
 
 const Movie = model("Movie", movieSchema)
 
-export default User;
+export default Movie;

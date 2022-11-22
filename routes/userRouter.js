@@ -11,11 +11,14 @@ import verify from "../middleware/verifyToken.js"
 const router = express.Router();
 
 router
-.route("/find/:id")
+.route("/:id")
 .put(verify, updateUser)
 .delete(verify, deleteUser)
-.get(verify, getUser)
 
-router.get("/", verify, getAllUser, getUserStats)
+router.get("/find/:id", verify, getUser)
+
+router.get("/", verify, getAllUser)
+
+router.get("/stats", getUserStats)
 
 export default router;

@@ -5,7 +5,7 @@ const verifyToken = async (req, res, next) => {
 
   if (authHeader) {
     const token = authHeader.split(" ")[1];
-    console.log("TOKEN --------", token)
+    //console.log("TOKEN --------", token)
     jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
       if (err) res.status(403).json({ error: "Token is not valid!" });
       req.user = user;
