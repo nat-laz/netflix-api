@@ -5,7 +5,6 @@ import {
   getList,
   updateList,
 } from "../controllers/listController.js";
-
 import verify from "../middleware/verifyToken.js";
 
 const router = express.Router();
