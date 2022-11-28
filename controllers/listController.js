@@ -68,8 +68,8 @@ export const getList = async (req, res) => {
       list = await List.aggregate([{ $sample: { size: 10 } }]);
     }
 
-    res.status(200).json(list);
+    return res.status(200).json(list);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 };
